@@ -1,0 +1,420 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CasinoDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bet">
+          <Key>
+            <PropertyRef Name="BetID" />
+          </Key>
+          <Property Name="BetID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="GameID" Type="int" />
+          <Property Name="BetDate" Type="date" />
+          <Property Name="Statistic" Type="varchar" MaxLength="10" />
+          <Property Name="BetAmount" Type="money" />
+          <Property Name="WinOrLoss" Type="varchar" MaxLength="10" />
+          <Property Name="PayoutAmount" Type="money" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CasinoDB.dbo.Booking' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="BookingID" />
+          </Key>
+          <Property Name="BookingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="LoungeID" Type="int" />
+          <Property Name="BookingDate" Type="date" />
+        </EntityType>
+        <EntityType Name="Game">
+          <Key>
+            <PropertyRef Name="GameID" />
+          </Key>
+          <Property Name="GameID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GameName" Type="varchar" MaxLength="30" />
+          <Property Name="GameDescription" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="PartyLounge">
+          <Key>
+            <PropertyRef Name="LoungeID" />
+          </Key>
+          <Property Name="LoungeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LoungeName" Type="varchar" MaxLength="30" />
+          <Property Name="LoungeDescription" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="User_">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="TypeID" Type="int" />
+          <Property Name="Name" Type="varchar" MaxLength="20" />
+          <Property Name="Surname" Type="varchar" MaxLength="20" />
+          <Property Name="Email" Type="varchar" MaxLength="60" />
+          <Property Name="Password" Type="varchar" MaxLength="20" />
+          <Property Name="GUID" Type="varchar" MaxLength="100" />
+          <Property Name="GUIDExpiry" Type="datetime" />
+        </EntityType>
+        <EntityType Name="User_Type">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Name="TypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeName" Type="varchar" MaxLength="30" />
+          <Property Name="TypeDescription" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK__Bet__GameID__173876EA">
+          <End Role="Game" Type="Self.Game" Multiplicity="0..1" />
+          <End Role="Bet" Type="Self.Bet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="GameID" />
+            </Principal>
+            <Dependent Role="Bet">
+              <PropertyRef Name="GameID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Bet__UserID__164452B1">
+          <End Role="User_" Type="Self.User_" Multiplicity="0..1" />
+          <End Role="Bet" Type="Self.Bet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Bet">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Booking__LoungeI__1BFD2C07">
+          <End Role="PartyLounge" Type="Self.PartyLounge" Multiplicity="0..1" />
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PartyLounge">
+              <PropertyRef Name="LoungeID" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="LoungeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Booking__UserID__1B0907CE">
+          <End Role="User_" Type="Self.User_" Multiplicity="0..1" />
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User___TypeID__1273C1CD">
+          <End Role="User_Type" Type="Self.User_Type" Multiplicity="0..1" />
+          <End Role="User_" Type="Self.User_" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_Type">
+              <PropertyRef Name="TypeID" />
+            </Principal>
+            <Dependent Role="User_">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CasinoDBModelStoreContainer">
+          <EntitySet Name="Bet" EntityType="Self.Bet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Game" EntityType="Self.Game" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PartyLounge" EntityType="Self.PartyLounge" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_" EntityType="Self.User_" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_Type" EntityType="Self.User_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Booking" EntityType="Self.Booking" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Booking].[BookingID] AS [BookingID], 
+    [Booking].[UserID] AS [UserID], 
+    [Booking].[LoungeID] AS [LoungeID], 
+    [Booking].[BookingDate] AS [BookingDate]
+    FROM [dbo].[Booking] AS [Booking]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Bet__GameID__173876EA" Association="Self.FK__Bet__GameID__173876EA">
+            <End Role="Game" EntitySet="Game" />
+            <End Role="Bet" EntitySet="Bet" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Bet__UserID__164452B1" Association="Self.FK__Bet__UserID__164452B1">
+            <End Role="User_" EntitySet="User_" />
+            <End Role="Bet" EntitySet="Bet" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Booking__LoungeI__1BFD2C07" Association="Self.FK__Booking__LoungeI__1BFD2C07">
+            <End Role="PartyLounge" EntitySet="PartyLounge" />
+            <End Role="Booking" EntitySet="Booking" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Booking__UserID__1B0907CE" Association="Self.FK__Booking__UserID__1B0907CE">
+            <End Role="User_" EntitySet="User_" />
+            <End Role="Booking" EntitySet="Booking" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User___TypeID__1273C1CD" Association="Self.FK__User___TypeID__1273C1CD">
+            <End Role="User_Type" EntitySet="User_Type" />
+            <End Role="User_" EntitySet="User_" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CasinoDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Bet">
+          <Key>
+            <PropertyRef Name="BetID" />
+          </Key>
+          <Property Name="BetID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="GameID" Type="Int32" />
+          <Property Name="BetDate" Type="DateTime" Precision="0" />
+          <Property Name="Statistic" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="BetAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="WinOrLoss" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PayoutAmount" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Game" Relationship="Self.FK__Bet__GameID__173876EA" FromRole="Bet" ToRole="Game" />
+          <NavigationProperty Name="User_" Relationship="Self.FK__Bet__UserID__164452B1" FromRole="Bet" ToRole="User_" />
+        </EntityType>
+        <EntityType Name="Game">
+          <Key>
+            <PropertyRef Name="GameID" />
+          </Key>
+          <Property Name="GameID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GameName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="GameDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Bets" Relationship="Self.FK__Bet__GameID__173876EA" FromRole="Game" ToRole="Bet" />
+        </EntityType>
+        <EntityType Name="PartyLounge">
+          <Key>
+            <PropertyRef Name="LoungeID" />
+          </Key>
+          <Property Name="LoungeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LoungeName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="LoungeDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Bookings" Relationship="Self.FK__Booking__LoungeI__1BFD2C07" FromRole="PartyLounge" ToRole="Booking" />
+        </EntityType>
+        <EntityType Name="User_">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="TypeID" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Surname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="GUID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="GUIDExpiry" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Bets" Relationship="Self.FK__Bet__UserID__164452B1" FromRole="User_" ToRole="Bet" />
+          <NavigationProperty Name="Bookings" Relationship="Self.FK__Booking__UserID__1B0907CE" FromRole="User_" ToRole="Booking" />
+          <NavigationProperty Name="User_Type" Relationship="Self.FK__User___TypeID__1273C1CD" FromRole="User_" ToRole="User_Type" />
+        </EntityType>
+        <EntityType Name="User_Type">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Name="TypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="TypeDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="User_" Relationship="Self.FK__User___TypeID__1273C1CD" FromRole="User_Type" ToRole="User_" />
+        </EntityType>
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="BookingID" />
+          </Key>
+          <Property Name="BookingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="LoungeID" Type="Int32" />
+          <Property Name="BookingDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="PartyLounge" Relationship="Self.FK__Booking__LoungeI__1BFD2C07" FromRole="Booking" ToRole="PartyLounge" />
+          <NavigationProperty Name="User_" Relationship="Self.FK__Booking__UserID__1B0907CE" FromRole="Booking" ToRole="User_" />
+        </EntityType>
+        <Association Name="FK__Bet__GameID__173876EA">
+          <End Role="Game" Type="Self.Game" Multiplicity="0..1" />
+          <End Role="Bet" Type="Self.Bet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="GameID" />
+            </Principal>
+            <Dependent Role="Bet">
+              <PropertyRef Name="GameID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Bet__UserID__164452B1">
+          <End Role="User_" Type="Self.User_" Multiplicity="0..1" />
+          <End Role="Bet" Type="Self.Bet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Bet">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Booking__LoungeI__1BFD2C07">
+          <End Role="PartyLounge" Type="Self.PartyLounge" Multiplicity="0..1" />
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PartyLounge">
+              <PropertyRef Name="LoungeID" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="LoungeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Booking__UserID__1B0907CE">
+          <End Role="User_" Type="Self.User_" Multiplicity="0..1" />
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User___TypeID__1273C1CD">
+          <End Role="User_Type" Type="Self.User_Type" Multiplicity="0..1" />
+          <End Role="User_" Type="Self.User_" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_Type">
+              <PropertyRef Name="TypeID" />
+            </Principal>
+            <Dependent Role="User_">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CasinoDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bets" EntityType="Self.Bet" />
+          <EntitySet Name="Games" EntityType="Self.Game" />
+          <EntitySet Name="PartyLounges" EntityType="Self.PartyLounge" />
+          <EntitySet Name="User_" EntityType="Self.User_" />
+          <EntitySet Name="User_Type" EntityType="Self.User_Type" />
+          <EntitySet Name="Bookings" EntityType="Self.Booking" />
+          <AssociationSet Name="FK__Bet__GameID__173876EA" Association="Self.FK__Bet__GameID__173876EA">
+            <End Role="Game" EntitySet="Games" />
+            <End Role="Bet" EntitySet="Bets" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Bet__UserID__164452B1" Association="Self.FK__Bet__UserID__164452B1">
+            <End Role="User_" EntitySet="User_" />
+            <End Role="Bet" EntitySet="Bets" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Booking__LoungeI__1BFD2C07" Association="Self.FK__Booking__LoungeI__1BFD2C07">
+            <End Role="PartyLounge" EntitySet="PartyLounges" />
+            <End Role="Booking" EntitySet="Bookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Booking__UserID__1B0907CE" Association="Self.FK__Booking__UserID__1B0907CE">
+            <End Role="User_" EntitySet="User_" />
+            <End Role="Booking" EntitySet="Bookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User___TypeID__1273C1CD" Association="Self.FK__User___TypeID__1273C1CD">
+            <End Role="User_Type" EntitySet="User_Type" />
+            <End Role="User_" EntitySet="User_" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CasinoDBModelStoreContainer" CdmEntityContainer="CasinoDBEntities">
+          <EntitySetMapping Name="Bets">
+            <EntityTypeMapping TypeName="CasinoDBModel.Bet">
+              <MappingFragment StoreEntitySet="Bet">
+                <ScalarProperty Name="BetID" ColumnName="BetID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="GameID" ColumnName="GameID" />
+                <ScalarProperty Name="BetDate" ColumnName="BetDate" />
+                <ScalarProperty Name="Statistic" ColumnName="Statistic" />
+                <ScalarProperty Name="BetAmount" ColumnName="BetAmount" />
+                <ScalarProperty Name="WinOrLoss" ColumnName="WinOrLoss" />
+                <ScalarProperty Name="PayoutAmount" ColumnName="PayoutAmount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Games">
+            <EntityTypeMapping TypeName="CasinoDBModel.Game">
+              <MappingFragment StoreEntitySet="Game">
+                <ScalarProperty Name="GameID" ColumnName="GameID" />
+                <ScalarProperty Name="GameName" ColumnName="GameName" />
+                <ScalarProperty Name="GameDescription" ColumnName="GameDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PartyLounges">
+            <EntityTypeMapping TypeName="CasinoDBModel.PartyLounge">
+              <MappingFragment StoreEntitySet="PartyLounge">
+                <ScalarProperty Name="LoungeID" ColumnName="LoungeID" />
+                <ScalarProperty Name="LoungeName" ColumnName="LoungeName" />
+                <ScalarProperty Name="LoungeDescription" ColumnName="LoungeDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_">
+            <EntityTypeMapping TypeName="CasinoDBModel.User_">
+              <MappingFragment StoreEntitySet="User_">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+                <ScalarProperty Name="GUIDExpiry" ColumnName="GUIDExpiry" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Type">
+            <EntityTypeMapping TypeName="CasinoDBModel.User_Type">
+              <MappingFragment StoreEntitySet="User_Type">
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+                <ScalarProperty Name="TypeDescription" ColumnName="TypeDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bookings">
+            <EntityTypeMapping TypeName="CasinoDBModel.Booking">
+              <MappingFragment StoreEntitySet="Booking">
+                <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="LoungeID" ColumnName="LoungeID" />
+                <ScalarProperty Name="BookingDate" ColumnName="BookingDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

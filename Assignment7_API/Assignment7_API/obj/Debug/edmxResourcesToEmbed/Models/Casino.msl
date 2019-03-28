@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CasinoDBModelStoreContainer" CdmEntityContainer="CasinoDBEntities">
+    <EntitySetMapping Name="Bets">
+      <EntityTypeMapping TypeName="CasinoDBModel.Bet">
+        <MappingFragment StoreEntitySet="Bet">
+          <ScalarProperty Name="BetID" ColumnName="BetID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="GameID" ColumnName="GameID" />
+          <ScalarProperty Name="BetDate" ColumnName="BetDate" />
+          <ScalarProperty Name="Statistic" ColumnName="Statistic" />
+          <ScalarProperty Name="BetAmount" ColumnName="BetAmount" />
+          <ScalarProperty Name="WinOrLoss" ColumnName="WinOrLoss" />
+          <ScalarProperty Name="PayoutAmount" ColumnName="PayoutAmount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Games">
+      <EntityTypeMapping TypeName="CasinoDBModel.Game">
+        <MappingFragment StoreEntitySet="Game">
+          <ScalarProperty Name="GameID" ColumnName="GameID" />
+          <ScalarProperty Name="GameName" ColumnName="GameName" />
+          <ScalarProperty Name="GameDescription" ColumnName="GameDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PartyLounges">
+      <EntityTypeMapping TypeName="CasinoDBModel.PartyLounge">
+        <MappingFragment StoreEntitySet="PartyLounge">
+          <ScalarProperty Name="LoungeID" ColumnName="LoungeID" />
+          <ScalarProperty Name="LoungeName" ColumnName="LoungeName" />
+          <ScalarProperty Name="LoungeDescription" ColumnName="LoungeDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User_">
+      <EntityTypeMapping TypeName="CasinoDBModel.User_">
+        <MappingFragment StoreEntitySet="User_">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Surname" ColumnName="Surname" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="GUID" ColumnName="GUID" />
+          <ScalarProperty Name="GUIDExpiry" ColumnName="GUIDExpiry" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User_Type">
+      <EntityTypeMapping TypeName="CasinoDBModel.User_Type">
+        <MappingFragment StoreEntitySet="User_Type">
+          <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+          <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+          <ScalarProperty Name="TypeDescription" ColumnName="TypeDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Bookings">
+      <EntityTypeMapping TypeName="CasinoDBModel.Booking">
+        <MappingFragment StoreEntitySet="Booking">
+          <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="LoungeID" ColumnName="LoungeID" />
+          <ScalarProperty Name="BookingDate" ColumnName="BookingDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
